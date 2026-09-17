@@ -1,3 +1,3 @@
-DREiMac
+# Eilenberg-MacLane Coordinates
 
-# Use Claude to generate a readme file
+Readme file is under maintenance.
