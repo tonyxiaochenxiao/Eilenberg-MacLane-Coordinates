@@ -32,10 +32,10 @@ We replace this case-by-case approach with a single framework that works uniform
 ## How it works
 
 We model $K(G,n)$ by the $n$-fold bar construction $B^nG$, which is again a topological abelian group at every stage. The universal bundles $B^{k}G \to EB^{k}G \to B^{k+1}G$ give a chain of connecting isomorphisms in Čech cohomology
-$$\check H^n(B;\mathcal F_G) \cong \check H^{n-1}(B;\mathcal F_{BG}) \cong \cdots \cong \check H^1(B;\mathcal F_{B^{n-1}G}) \cong [B, B^nG],$$
+$$Ȟ^n(B;ℱ_G) \cong Ȟ^{n-1}(B;ℱ_{BG}) \cong \cdots \cong Ȟ^1(B;ℱ_{B^{n-1}G}) \cong [B, B^nG],$$
 which lowers the cohomological degree one bar construction at a time.
 
-The core of the paper, and of this code, is the **$Q^n$-Algorithm**: an explicit, constructive inverse of the coboundary on sheaves of maps into a contractible group $E$. Given a Čech cocycle $\eta \in \check Z^n(\mathcal U;\mathcal F_E)$ on a finite cover by balls, it builds a cochain $Q^n(\eta)$ with $d^{\,n-1}Q^n(\eta) = \eta$ by
+The core of the paper, and of this code, is the **$Q^n$-Algorithm**: an explicit, constructive inverse of the coboundary on sheaves of maps into a contractible group $E$. Given a Čech cocycle $\eta \in Ž^n(𝒰;ℱ_E)$ on a finite cover by balls, it builds a cochain $Q^n(\eta)$ with $d^{\,n-1}Q^n(\eta) = \eta$ by
 1. **lifting** $\eta$ locally on each open set,
 2. **extending** the local correction terms with the contracting homotopy of $E$ and piecewise-linear bump functions, and
 3. **gluing** the pieces together, one open set at a time, along a shrinking filtration of the cover.
@@ -45,7 +45,7 @@ No partition of unity, optimization, or global linear solve is needed. Calling $
 We implement two versions of the final step:
 
 - **Canonical pipeline.** Apply $Q^1$ to obtain $f_\eta : X^{(\alpha)} \to B^nG$ directly.
-- **Milnor variant.** Stop at a Čech 1-cocycle and pass to its classifying map into Milnor's model $\mathbf B(B^{n-1}G)$ via a partition of unity. For $n=1$ this recovers Perea's sparse circular coordinates. Whenever $B^{n-1}G$ carries a metric, the target inherits one, so Isomap, MDS and Ripser apply directly to the coordinates.
+- **Milnor variant.** Stop at a Čech 1-cocycle and pass to its classifying map into Milnor's model $ℬ(B^{n-1}G)$ via a partition of unity. For $n=1$ this recovers Perea's sparse circular coordinates. Whenever $B^{n-1}G$ carries a metric, the target inherits one, so Isomap, MDS and Ripser apply directly to the coordinates.
 
 ## Installation
 
@@ -131,11 +131,11 @@ To compute a coordinate in higher degree, pass a degree-$n$ cocycle: for example
 | Notebook section | Paper | What it computes |
 |---|---|---|
 | $S^1$, $Bℤ$-coordinates | Experiment 1 | The canonical $Bℤ$-coordinate of a noisy circle from the generator of $H^1(S^1;ℤ)$, on a cover by three geodesic balls. We realize it in $S^1$ and check it with Isomap. |
-| $S^1$, $\mathbf Bℤ$-coordinates | Experiment 1 | The same class through the Milnor variant. For $n=1$ this is the classical circular coordinate, so the two pipelines can be compared directly. |
+| $S^1$, $ℬℤ$-coordinates | Experiment 1 | The same class through the Milnor variant. For $n=1$ this is the classical circular coordinate, so the two pipelines can be compared directly. |
 | $S^1$, $Bℤ_q$-coordinates | Experiment 2 | A $Bℤ_5$-coordinate from the same data, drawn in the 1-skeleton $\bigvee_{i=0}^{q-1} S^1$ of $L^\infty_q$. Comparing it with the $Bℤ$-coordinate shows why Bockstein lifting matters. |
 | $S^2$ (with local density), $B(Bℤ)$-coordinates | Experiment 3 | A $B^2ℤ$-coordinate from the generator of $H^2(S^2;ℤ)$ on a tetrahedral cover by four balls, with extra samples where the bump functions are nontrivial. The canonical pipeline iterates $Q^2$ and $Q^1$. We plot the result through its barycentric coordinates $(t_0,t_1)$ and map it back to $S^2$ by stereographic projection. |
 | $S^2$, $B^2ℤ$-coordinates | Experiment 4 | The Milnor variant applied to the degree-1 cocycle from the previous section, realized in $ℂℙ^\infty$ with the Fubini–Study metric. Isomap plus Ripser recover the persistent cohomology of $S^2$. |
-| $ℝℙ^2$, $\mathbf B(Bℤ_2)$-coordinates | Experiment 5 | A **new coordinate type**: a $K(ℤ_2,2)$-coordinate from the generator of $H^2(ℝℙ^2;ℤ_2)$, on the 6-vertex minimal triangulation with the simplicial $\ell^1$ metric. Isomap recovers the Roman surface, and Ripser recovers the cohomology of $ℝℙ^2$ in both $ℤ_2$ and $ℤ_3$ coefficients. |
+| $ℝℙ^2$, $ℬ(Bℤ_2)$-coordinates | Experiment 5 | A **new coordinate type**: a $K(ℤ_2,2)$-coordinate from the generator of $H^2(ℝℙ^2;ℤ_2)$, on the 6-vertex minimal triangulation with the simplicial $\ell^1$ metric. Isomap recovers the Roman surface, and Ripser recovers the cohomology of $ℝℙ^2$ in both $ℤ_2$ and $ℤ_3$ coefficients. |
 
 Each section builds the cover filtration and the cocycle, runs `compute_EiMac_coords` (or the Milnor variant `dim1_cech_cocycle_to_MilB_G`), computes a distance matrix on the resulting coordinates, and then runs Isomap and Ripser on it.
 
@@ -146,8 +146,8 @@ Each section builds the cover filtration and the cocycle, runs `compute_EiMac_co
 | `natural_examples.py` | Main entry point `compute_EiMac_coords`, plus cover filtrations (`compute_open_cover_filtration`), bump functions `g_i`, cocycle construction (`make_eta`), the Milnor variant (`dim1_cech_cocycle_to_MilB_G`), and nerve plots. |
 | `cechcohomology.py` | Čech cochains on the nerve of a cover (`CechCochain`): coboundary, lifting, extension by softness, gluing, the maps $i_\sharp$ and $j_\sharp$, and the $Q^n$-Algorithm `Q_lower_cech_dim_on_F_EG`. |
 | `eg_tools.py` | Groups and the bar construction: $ℤ$, $S^1$, $ℤ_q$ (`make_Zq`), $EG$ (`make_EG`), $BG$ (`make_BG`), the group law on bars, and the contracting homotopy of $EG$ (`homotopy_eg`). |
-| `sheaves.py` | `SheafSection`, a section of $\mathcal F_G$ over a set of data indices. |
-| `representations.py` | Concrete realizations and metrics: $Bℤ \to S^1$, $\mathbf B S^1 \to ℂℙ^\infty$, $Bℤ_q \to$ wedge of circles, and distance matrices on bars, including the Fubini–Study metric on $\mathbf B S^1$. |
+| `sheaves.py` | `SheafSection`, a section of $ℱ_G$ over a set of data indices. |
+| `representations.py` | Concrete realizations and metrics: $Bℤ \to S^1$, $ℬ S^1 \to ℂℙ^\infty$, $Bℤ_q \to$ wedge of circles, and distance matrices on bars, including the Fubini–Study metric on $ℬ S^1$. |
 | `utils.py`, `math_tools_miscellaneous.py` | Helper maps: Hopf map, Riemann sphere, projective PCA. |
 | `E-M_Coordinate_Computation_Newest.ipynb` | Notebook reproducing Experiments 1–5 of the paper. |
 | `requirements.txt` | Exact versions of all dependencies. |
