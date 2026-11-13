@@ -1,0 +1,11 @@
+# Exact versions used to run E-M_Coordinate_Computation_Newest.ipynb (Python 3.9.13).
+# DREiMac 0.3.0 is bundled in DREiMac/ and does not need to be installed.
+numpy==1.23.5
+scipy==1.11.3
+scikit-learn==1.6.1
+matplotlib==3.8.0
+plotly==5.9.0
+ripser==0.6.4
+persim==0.3.1
+numba==0.56.4
+jupyter
