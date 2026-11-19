@@ -4,7 +4,7 @@
 
 This repository contains our Python implementation of the **Sparse Eilenberg–MacLane Algorithm** from
 
-> T. X. Xiao and J. A. Perea. *From Persistent Cohomology to Maps into Arbitrary Eilenberg–MacLane Spaces.* Preprint, 2026.
+> T. X. Xiao and J. A. Perea. *From Persistent Cohomology to Maps into Arbitrary Eilenberg–MacLane Spaces.* [Preprint arXiv:2611.23659](https://arxiv.org/abs/2611.23659), 2026.
 
 Given a dataset $X$ and a cohomology class $\eta \in H^n(-;G)$ detected on it, we construct an explicit coordinate
 $$f_\eta : X^{(\alpha)} \longrightarrow K(G,n),$$
@@ -170,10 +170,12 @@ If you use this code, please cite:
 
 ```bibtex
 @misc{XiaoPerea2026EM,
-  author = {Xiao, Tony Xiaochen and Perea, Jose A.},
-  title  = {From Persistent Cohomology to Maps into Arbitrary {E}ilenberg--{M}ac{L}ane Spaces},
-  year   = {2026},
-  note   = {Preprint}
+  author        = {Xiao, Tony Xiaochen and Perea, Jose A.},
+  title         = {From Persistent Cohomology to Maps into Arbitrary {E}ilenberg--{M}ac{L}ane Spaces},
+  year          = {2026},
+  eprint        = {2611.23659},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2611.23659}
 }
 ```
 
